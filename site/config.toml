@@ -1,7 +1,32 @@
-baseURL = "/"
+baseURL = "/en/"
 theme = "hugo-whisper-theme"
 languageCode = "en-us"
-title = "Hugo Whisper Theme"
+title = "ShadowCat"
+
+defaultContentLanguage = 'en'
+defaultContentLanguageInSubdir = true
+
+[languages]
+  [languages.en]
+    contentDir = 'content/en'
+    disabled = false
+    languageCode = 'en-US'
+    languageDirection = 'ltr'
+    languageName = 'English'
+    title = 'ShadowCat Documentation'
+    weight = 2
+    [languages.en.params]
+      subtitle = 'Reference, Tutorials, and Explanations for using ShadowCat'
+  [languages.cn]
+    contentDir = 'content/cn'
+    disabled = false
+    languageCode = 'cn'
+    languageDirection = 'ltr'
+    languageName = 'Chinese'
+    title = 'ShadowCat 文档'
+    weight = 3
+    [languages.cn.params]
+      subtitle = 'Reference, Tutorials, and Explanations'
 
 pygmentsCodeFences = true
 pygmentsCodefencesGuessSyntax = true
@@ -18,12 +43,12 @@ summaryLength = 30
 
 [[menu.main]]
     name = "Home"
-    url = "/"
+    url = ""
     weight = 1
 
 [[menu.main]]
     name = "Docs"
-    url = "/docs/"
+    url = "docs/"
     weight = 2
 
 [params]
@@ -52,4 +77,4 @@ summaryLength = 30
       standard  = "/images/logo.svg"
 
   [params.footer]
-    copyright_text = '© 2023 <a class="redrabbit" href="#">Red Rabbit Studio</a>'
+    copyright_text = '© 2023 | <a class="redrabbit" href="#">Made with 💚 by Red Rabbit Studio</a>'

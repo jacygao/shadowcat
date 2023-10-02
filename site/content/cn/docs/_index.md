@@ -4,6 +4,8 @@ date: 2018-11-28T15:14:39+10:00
 weight: 1
 ---
 
+中文网站请点击这里
+
 ## What is a ShadowCat?
 
 ShadowCat is a new VPN project that offers flexible VPN services with a pay-as-you-go model.

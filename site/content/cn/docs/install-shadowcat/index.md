@@ -5,27 +5,32 @@ draft: false
 weight: 3
 ---
 
-## Create a new Hugo site
+## Get your first ShadowCat
 
-```
-hugo new site mynewsite
-```
+We are currently offer ShadowCat as a free VPN service. You can get your first ShadowCat by submitting a request to us with your email address via this form.
 
-This will create a fresh Hugo site in the folder `mynewsite`.
+After submitting your interest you will receive a ShadowCat VPN seed which can be added to your OpenVPN Client
 
-## Install theme
+## Add ShadowCat to OpenVPN
 
-Copy or git clone this theme into the sites themes folder `mynewsite/themes`
+Please follow the instruction below based on your device and operating system.
 
-#### Install with Git
+### Windows
 
-```
-cd mynewsite
-cd themes
-git clone https://github.com/jugglerx/hugo-whisper-theme.git
-```
+Import file via your Window OpenVPN Client.
 
-#### Install from .zip file
+### Mac
+
+Import file via your Mac OpenVPN Client.
+
+### IOS
+
+Import file via your IOS OpenVPN App.
+
+### Android
+
+Import file via your Android OpenVPN App.
+
 
 You can download the .zip file located here https://github.com/JugglerX/hugo-whisper-theme/archive/master.zip.
 
