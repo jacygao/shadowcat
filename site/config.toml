@@ -1,4 +1,3 @@
-baseURL = "/en/"
 theme = "hugo-whisper-theme"
 languageCode = "en-us"
 title = "ShadowCat"
@@ -43,17 +42,17 @@ summaryLength = 30
 
 [[menu.main]]
     name = "Home"
-    url = ""
+    url = "/en"
     weight = 1
 
 [[menu.main]]
     name = "Docs"
-    url = "docs/"
+    url = "/en/docs"
     weight = 2
 
 [params]
   google_analytics_id=""
-  homepage_button_link = '/docs'
+  homepage_button_link = 'docs'
   homepage_button_text = 'Get Started'
   homepage_intro = 'Whisper is a documentation theme built with Hugo. The design and functionality is intentionally minimal.'
   homepage_image = '/images/terminal.gif'
