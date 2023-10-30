@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "uQI01mefxAgbJVX5ZtXJsQhl2OGzOYNVl2ERpTd89Us=",
+  "Source": "VpnWebServer",
+  "BasePath": "_content/VpnWebServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

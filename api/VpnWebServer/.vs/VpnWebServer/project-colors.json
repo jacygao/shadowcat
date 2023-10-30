@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "3f785900-37df-4c7f-89f3-a9c9f04a294f": {
+      "ProjectGuid": "3f785900-37df-4c7f-89f3-a9c9f04a294f",
+      "DisplayName": "VpnWebServer",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
