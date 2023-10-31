@@ -1,25 +1,19 @@
-﻿using System;
-using Newtonsoft.Json;
-
-namespace AzureFunctions
+﻿namespace Models
 {
-    public class Correlation
+    public record Correlation
     {
         // Container ID
-        [JsonProperty(PropertyName = "id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         // Partition Key
-        [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
 
-        [JsonProperty(PropertyName = "regionCode")]
         public string RegionCode { get; set; }
 
-        [JsonProperty(PropertyName = "filename")]
         public string Filename { get; set; }
 
-        [JsonProperty(PropertyName = "downloadUrl")]
         public string DownloadUrl { get; set; }
+
+        public string Description { get; set; }
     }
 }
