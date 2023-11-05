@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Azure.Cosmos;
 using System.Collections.Generic;
 using Models;
+using Newtonsoft.Json;
+using ShadowCatFileAPI.Contracts;
 
 namespace ShadowCatFileAPI
 {
@@ -30,7 +34,7 @@ namespace ShadowCatFileAPI
                     [HttpTrigger(AuthorizationLevel.Function, "get", "patch", Route = "files")] HttpRequest req,
                     ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a GetFiles request.");
+            log.LogInformation("C# HTTP trigger function processed a Files request.");
 
             if (req.Headers.ContainsKey("Authorization") && req.Headers["Authorization"][0].StartsWith("Bearer "))
             {
@@ -47,9 +51,25 @@ namespace ShadowCatFileAPI
                 switch (req.Method)
                 {
                     case "GET":
-                        return new OkObjectResult(GetUserCorrelationsAsync(user));
+
+                        return new OkObjectResult(GetUserCorrelationsAsync(user).Result);
+
                     case "PATCH":
-                        break;
+
+                        var payload = await new StreamReader(req.Body).ReadToEndAsync();
+
+                        PatchCorrelationsRequest requestBody = JsonConvert.DeserializeObject<PatchCorrelationsRequest>(payload);
+
+                        try
+                        {
+                            var replacedItem = await UpdateUserCorrelationAsync(user, requestBody.Region, requestBody.Description);
+                        } 
+                        catch (Exception ex)
+                        {
+                            return new UnprocessableEntityObjectResult(ex.Message);
+                        }
+
+                        return new NoContentResult();
                 }
 
 
@@ -60,39 +80,37 @@ namespace ShadowCatFileAPI
 
         public async Task<List<Correlation>> GetUserCorrelationsAsync(string user)
         {
-            List<Correlation> result = null;
+            List<Correlation> result = new();
 
             var parameterizedQuery = new QueryDefinition(
-                query: "SELECT * FROM correlations c WHERE c.username == @user"
+                query: "SELECT * FROM correlations c WHERE c.username = @user"
             ).WithParameter("@user", user);
 
             // Query multiple correlations from container
-            using FeedIterator<Correlation> feed = container.GetItemQueryIterator<Correlation>(
+            using (FeedIterator<Correlation> feed = container.GetItemQueryIterator<Correlation>(
                 queryDefinition: parameterizedQuery
-            );
-
-            // Iterate query result pages
-            while (feed.HasMoreResults)
+            ))
             {
-                FeedResponse<Correlation> response = await feed.ReadNextAsync();
-
-                // Iterate query results
-                foreach (Correlation item in response)
+                // Iterate query result pages
+                while (feed.HasMoreResults)
                 {
-                    result.Add(item);
+                    // Iterate query results
+                    foreach (var item in await feed.ReadNextAsync())
+                    {
+                        result.Add(item);
+                    }
                 }
             }
-
             return result;
         }
 
-        public async Task UpdateUserCorrelation(string user, string region, string desc)
+        public async Task<Correlation> UpdateUserCorrelationAsync(string user, string region, string desc)
         {
-            List<Correlation> unusedCorrelations = null;
+            List<Correlation> unusedCorrelations = new();
 
             // Get an unused client
             var parameterizedQuery = new QueryDefinition(
-                query: "SELECT * FROM correlations c WHERE c.username == @user LIMIT 1"
+                query: "SELECT * FROM correlations c WHERE c.username = @user OFFSET 0 LIMIT 1"
             ).WithParameter("@user", unusedUsername);
 
             // Query multiple correlations from container
@@ -116,15 +134,12 @@ namespace ShadowCatFileAPI
                 throw new TaskCanceledException("no avaialble client for the given region");
             }
 
-            var correlation = unusedCorrelations.First<Correlation>();
+            var correlation = unusedCorrelations.First();
 
-            correlation.Username = user;
-            correlation.RegionCode = region;
-            correlation.Description = desc;
-
-            Correlation replacedItem = await container.ReplaceItemAsync<Correlation>(
+            return await container.ReplaceItemAsync(
                 item: correlation,
-                id: correlation.Id
+                id: correlation.Id,
+                partitionKey: new PartitionKey(unusedUsername)
             );
         }
     }
