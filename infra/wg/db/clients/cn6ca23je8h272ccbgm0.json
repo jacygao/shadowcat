@@ -1,0 +1,22 @@
+{
+	"id": "cn6ca23je8h272ccbgm0",
+	"private_key": "yBLCAPBBNA+bcz/zGLaadpOriuUsJ+1f+2beMkNDm28=",
+	"public_key": "01xXvIdFTmxxeJfp8zk8YJUtn0dViBcIgmFDvHK66jo=",
+	"preshared_key": "1L5DUSeJFQLaeT3UphSg3wCKYFddPFdWE5Fsy79aKaA=",
+	"name": "tester",
+	"telegram_userid": "",
+	"email": "aus.jacy@gmail.com",
+	"allocated_ips": [
+		"10.252.1.1/32"
+	],
+	"allowed_ips": [
+		"0.0.0.0/0"
+	],
+	"extra_allowed_ips": [],
+	"endpoint": "",
+	"additional_notes": "",
+	"use_server_dns": true,
+	"enabled": true,
+	"created_at": "2024-02-14T13:50:00.019567873Z",
+	"updated_at": "2024-02-14T13:50:00.019567873Z"
+}
